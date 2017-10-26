@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 import re
 from datetime import datetime
 from decimal import Decimal
@@ -99,7 +100,11 @@ def to_decimal(value: Union[Decimal, str, float], precision=2):
 
 
 def get_wsdl_path(filename) -> str:
-    resource_package = 'correios'
-    resource_path = '/'.join(('wsdls', filename))
+    enviroment_var = os.environ.get('CORREIOS_WSDL_PATH')
 
-    return pkg_resources.resource_filename(resource_package, resource_path)
+    if not enviroment_var:
+        resource_package = 'correios'
+        resource_path = '/'.join(('wsdls', filename))
+        return pkg_resources.resource_filename(resource_package, resource_path)
+
+    return os.path.join(enviroment_var, filename)
