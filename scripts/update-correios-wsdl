@@ -1,0 +1,11 @@
+#!/usr/bin/env python
+
+from correios.update_wsdl import update_wsdl
+
+
+print('Updating Correios WSDL')
+try:
+    update_wsdl()
+    print('Updated with success')
+except Exception as error:
+    print(f'Fail to update with error: {error}')
